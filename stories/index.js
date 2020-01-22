@@ -13,6 +13,9 @@ import Appointment from "components/Appointments/index";
 import Header from "components/Appointments/Header";
 import Empty from "components/Appointments/Empty";
 import Show from "components/Appointments/Show";
+import Confirm from "components/Appointments/Confirm";
+import Status from "components/Appointments/Status";
+import Error from "components/Appointments/Error";
 
 storiesOf("Button", module)
 	.addParameters({
@@ -156,3 +159,33 @@ storiesOf("Show", module)
     />
     )
   )
+
+  storiesOf("Confirm", module)
+    .addParameters({
+
+    })
+    .add("Confirm", () => (
+      <Confirm 
+        message={"Delete the Appointment?"}
+        onConfirm={event => action('onConfirm')(Appointment.id)}
+        onCancel={event => action('onCancel')(Appointment.id)}
+      />
+    ))
+
+
+  storiesOf("Status", module)
+      .addParameters({})
+      .add("Status", () => (
+        <Status
+          message={"Deleting"}
+        />
+      ))
+
+  storiesOf("Error", module)
+      .addParameters({})
+      .add("Error", () => (
+        <Error
+          message={"Could not delete Appointment."}
+          onClose={event => action('onClose')(Appointment.id)}
+        />
+      ))
