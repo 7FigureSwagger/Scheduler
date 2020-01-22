@@ -9,6 +9,8 @@ import Button from "components/Button";
 import DayList from 'components/DayList';
 import InterviewerList from 'components/InterviewerList';
 import InterviewerListItem from 'components/InterviewerListItem';
+import Appointment from 'components/Appointments/index';
+import Header from 'components/Appointments/Header'
 
 storiesOf("Button", module)
   .addParameters({
@@ -115,7 +117,7 @@ storiesOf("Button", module)
         .add("Initial", () => (
           <InterviewerList
             interviewers={interviewers}
-            setInterviewer={action("setInterviewer")}
+            setInterviewer={event => action("setInterviewer")(interviewer.id)}
           />
         ))
         .add("Preselected", () => (
@@ -125,3 +127,13 @@ storiesOf("Button", module)
             setInterviewer={event => action("setInterviewer")(interviewer.id)}
           />
         ));
+
+        // const appointments = {}
+
+        // storiesOf('Appointment', module)
+        //   .addParameters({
+        //     backgrounds: [{ name: "white", value: "#fff", default: true }]
+        //   })
+        // .add('Appointment', () => <Appointment />)
+        // .add("Appointment with Time", () => <Appointment time="12pm" />)
+        // .add("Header", () => <Header time='12pm' />);
