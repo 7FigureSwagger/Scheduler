@@ -93,11 +93,11 @@ storiesOf("Button", module)
       ))
       .add("Clickable", () => (
         <InterviewerListItem
-          id={interviewer.id}
-          name={interviewer.name}
-          avatar={interviewer.avatar}
-          setInterviewer={action("setInterviewer")}
-        />
+        id={interviewer.id}
+        name={interviewer.name}
+        avatar={interviewer.avatar}
+        setInterviewer={event => action("setInterviewer")(interviewer.id)}
+      />
       ));
 
       const interviewers = [
@@ -121,7 +121,7 @@ storiesOf("Button", module)
         .add("Preselected", () => (
           <InterviewerList
             interviewers={interviewers}
-            interviewer={3}
-            setInterviewer={action("setInterviewer")}
+            value={3}
+            setInterviewer={event => action("setInterviewer")(interviewer.id)}
           />
         ));
