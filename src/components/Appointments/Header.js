@@ -1,8 +1,11 @@
-// import React from 'react';
-// import 'components/Appointments/Header'
+import React from "react";
+// import'components/Appointments/styles.scss'
 
-
-// <header className="appointment__time">
-// <h4 className="text--semi-bold">{props.time}}</h4>
-//   <hr className="appointment__separator" />
-// </header>
+export default function Header(props) {
+	return(
+  <header className="appointment__time">
+		<h4 className="text--semi-bold">{props.time}</h4>
+		<hr className="appointment__separator" />
+	</header>
+  )
+}

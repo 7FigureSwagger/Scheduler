@@ -18,7 +18,7 @@ export default function InterviewerList(props) {
 				name={interviewer.name}
 				avatar={interviewer.avatar}
 				selected={interviewer.id === props.value}
-				setInterviewer={(event) => props.setInterviewer(interviewer.id)}
+				setInterviewer={(event) => props.setIntervifewer(interviewer.id)}
 			/>
 		);
 	});
@@ -30,14 +30,3 @@ export default function InterviewerList(props) {
 		</section>
 	);
 }
-
-// const interviewers = props.interviewers.map(interviewer =>
-// 	{
-// 		<InterviewerListItem
-// 			key={props.id}
-// 			name={props.name}
-// 			avatar={props.avatar}
-// 			selected={props.id === props.value}
-// 			setInterviewer={event => props.setInterviewer(props.id)}
-// 		/>
-// 	}
