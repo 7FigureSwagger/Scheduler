@@ -5,9 +5,9 @@ import 'components/DayListItem.scss';
 
 export default function DayListItem(props) {
   
-  const dayClass = classnames('day-list_item:hover', {
-    'day-list__item--selected:hover':props.selected,
-    'day-list__item--full:hover':props.spots === 0,
+  const dayClass = classnames('day-list__item', {
+    'day-list__item--selected':props.selected,
+    'day-list__item--full':props.spots === 0,
     })
   
   const formatSpots = (spots) => {

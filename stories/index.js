@@ -8,6 +8,7 @@ import DayListItem from 'components/DayListItem';
 import Button from "components/Button";
 import DayList from 'components/DayList';
 import InterviewerList from 'components/InterviewerList';
+import InterviewerListItem from 'components/InterviewerListItem';
 
 storiesOf("Button", module)
   .addParameters({
