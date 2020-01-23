@@ -175,12 +175,12 @@ storiesOf("Appointment", module)
 			setInterviewer={event => action("setInterviewer")(interviewer.id)}
 		/>
 	))
-	// .add("Appointment Empty", () => (
-	// 	<Fragment>
-	// 		<Appointment id={1} time="12pm" />
-	// 		<Appointment id="last" time="1pm" />
-	// 	</Fragment>
-	// ));
+	.add("Appointment Empty", () => (
+		<Fragment>
+        <Appointment id={1} time="12pm" />
+        <Appointment id="last" time="1pm" />
+		</Fragment>
+	));
 
 //================================================================================================================================================================
 
