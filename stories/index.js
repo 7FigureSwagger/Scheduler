@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -16,6 +16,9 @@ import Show from "components/Appointments/Show";
 import Confirm from "components/Appointments/Confirm";
 import Status from "components/Appointments/Status";
 import Error from "components/Appointments/Error";
+import Form from "components/Appointments/Form";
+
+//================================================================================================================================================================
 
 storiesOf("Button", module)
 	.addParameters({
@@ -33,6 +36,8 @@ storiesOf("Button", module)
 		</Button>
 	));
 
+//================================================================================================================================================================
+
 storiesOf("DayListItem", module) //Initiates Storybook and registers our DayListItem component
 	.addParameters({
 		backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -43,6 +48,8 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
 	.add("Clickable", () => (
 		<DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
 	));
+
+//================================================================================================================================================================
 
 const days = [
 	{
@@ -72,6 +79,8 @@ storiesOf("DayList", module)
 	.add("Tuesday", () => (
 		<DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
 	));
+
+//================================================================================================================================================================
 
 const interviewer = {
 	id: 1,
@@ -107,6 +116,8 @@ storiesOf("InterviewerListItem", module)
 		/>
 	));
 
+//================================================================================================================================================================
+
 const interviewers = [
 	{ id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
 	{ id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
@@ -128,10 +139,12 @@ storiesOf("InterviewerList", module)
 	.add("Preselected", () => (
 		<InterviewerList
 			interviewers={interviewers}
-			value={3}
+			value={1}
 			setInterviewer={event => action("setInterviewer")(interviewer.id)}
 		/>
 	));
+
+//================================================================================================================================================================
 
 const appointments = {};
 
@@ -142,50 +155,71 @@ storiesOf("Appointment", module)
 	.add("Appointment", () => <Appointment />)
 	.add("Appointment with Time", () => <Appointment time="12pm" />)
 	.add("Header", () => <Header time="12pm" />)
-	.add("Empty", () => <Empty onAdd={event => action("onAdd")(Appointment.id)} />);
+	.add("Empty", () => (
+		<Empty onAdd={event => action("onAdd")(Appointment.id)} />
+	))
+	.add("Edit", () => (
+		<Form
+			name={"Ali"}
+			interviewers={interviewers}
+			interviewer={3}
+			onSave={event => action("onSave")(Appointment.id)}
+			onCancel={event => action("onCancel")(Appointment.id)}
+		/>
+	))
+	.add("Create", () => (
+		<Form
+			interviewers={interviewers}
+			onSave={(name, interviewer) => action("onSave")(name, interviewer)}
+			onCancel={event => action("onCancel")(Appointment.id)}
+			setInterviewer={event => action("setInterviewer")(interviewer.id)}
+		/>
+	))
+	// .add("Appointment Empty", () => (
+	// 	<Fragment>
+	// 		<Appointment id={1} time="12pm" />
+	// 		<Appointment id="last" time="1pm" />
+	// 	</Fragment>
+	// ));
 
-
+//================================================================================================================================================================
 
 storiesOf("Show", module)
-  .addParameters({
+	.addParameters({})
+	.add("Show", () => (
+		<Show
+			student={"Lydia Miller Jones"}
+			interviewer={interviewer}
+			onEdit={event => action("onEdit")(Appointment.id)}
+			onDelete={event => action("onDelete")(Appointment.id)}
+		/>
+	));
 
-  })
-  .add('Show', () => (
-    <Show
-      student={'Lydia Miller Jones'}
-      interviewer={interviewer}
-      onEdit={event => action('onEdit')(Appointment.id)}
-      onDelete={event => action('onDelete')(Appointment.id)}
-    />
-    )
-  )
+//================================================================================================================================================================
 
-  storiesOf("Confirm", module)
-    .addParameters({
+storiesOf("Confirm", module)
+	.addParameters({})
+	.add("Confirm", () => (
+		<Confirm
+			message={"Delete the Appointment?"}
+			onConfirm={event => action("onConfirm")(Appointment.id)}
+			onCancel={event => action("onCancel")(Appointment.id)}
+		/>
+	));
 
-    })
-    .add("Confirm", () => (
-      <Confirm 
-        message={"Delete the Appointment?"}
-        onConfirm={event => action('onConfirm')(Appointment.id)}
-        onCancel={event => action('onCancel')(Appointment.id)}
-      />
-    ))
+//================================================================================================================================================================
 
+storiesOf("Status", module)
+	.addParameters({})
+	.add("Status", () => <Status message={"Deleting"} />);
 
-  storiesOf("Status", module)
-      .addParameters({})
-      .add("Status", () => (
-        <Status
-          message={"Deleting"}
-        />
-      ))
+//================================================================================================================================================================
 
-  storiesOf("Error", module)
-      .addParameters({})
-      .add("Error", () => (
-        <Error
-          message={"Could not delete Appointment."}
-          onClose={event => action('onClose')(Appointment.id)}
-        />
-      ))
+storiesOf("Error", module)
+	.addParameters({})
+	.add("Error", () => (
+		<Error
+			message={"Could not delete Appointment."}
+			onClose={event => action("onClose")(Appointment.id)}
+		/>
+	));
