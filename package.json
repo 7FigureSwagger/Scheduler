@@ -16,7 +16,9 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public --ci",
     "build-storybook": "build-storybook -s public"
+   
   },
+  "proxy":"http://localhost:8001/api/days",
   "browserslist": {
     "production": [
       ">0.2%",
