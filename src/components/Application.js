@@ -73,7 +73,7 @@ export default function Application(props) {
 		appointments: {}
 	});
 	// const setDay = (day => setState(day => ({...state, day})));
-
+	
 	useEffect(() => {
 		const data = Axios.get("http://localhost:8001/api/days");
 
