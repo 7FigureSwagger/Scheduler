@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DayList from "components/DayList";
 import InterviewerList from "components/InterviewerList";
 import "components/Application.scss";
 import Appointment from "./Appointments";
+import Axios from "axios";
 
 const appointment = [
 	{
@@ -48,25 +49,42 @@ const appointment = [
 ];
 
 const days = [
-	{
-		id: 1,
-		name: "Monday",
-		spots: 2
-	},
-	{
-		id: 2,
-		name: "Tuesday",
-		spots: 5
-	},
-	{
-		id: 3,
-		name: "Wednesday",
-		spots: 0
-	}
+	// 	{
+	// 		id: 1,
+	// 		name: "Monday",
+	// 		spots: 2
+	// 	},
+	// 	{
+	// 		id: 2,
+	// 		name: "Tuesday",
+	// 		spots: 5
+	// 	},
+	// 	{
+	// 		id: 3,
+	// 		name: "Wednesday",
+	// 		spots: 0
+	// 	}
 ];
 
 export default function Application(props) {
-	const [day, setDay] = useState("Monday");
+	const [state, setState] = useState({
+		day: "Monday",
+		days: [],
+		appointments: {}
+	});
+	// const setDay = (day => setState(day => ({...state, day})));
+
+	useEffect(() => {
+		const data = Axios.get("http://localhost:8001/api/days");
+
+		Promise.all([data])
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	}, []);
 
 	const schedule = appointment.map(app => {
 		return (
@@ -86,7 +104,7 @@ export default function Application(props) {
 				/>
 				<hr className="sidebar__separator sidebar--centered" />
 				<nav className="sidebar__menu">
-					<DayList days={days} day={day} setDay={setDay} />
+					<DayList days={state.days} day={state.day} setDay={state.setDay} />
 				</nav>
 				<img
 					className="sidebar__lhl sidebar--centered"
