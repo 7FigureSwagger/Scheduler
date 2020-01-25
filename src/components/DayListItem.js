@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classnames from 'classnames/bind';
 
 import 'components/DayListItem.scss';
@@ -26,11 +26,11 @@ export default function DayListItem(props) {
        return ("5 spots remaining");
     }
    }
-
+   console.log(props);
   return (
-    <li class={dayClass} onClick={() => props.setDay(props.name)}>
+    <li className={dayClass} onClick={() => props.setDay(props.name)}>
       <h2 >{props.name}</h2>
-      <h3 >{formatSpots()}</h3>
+      <h3 >{formatSpots(props.spots)}</h3>
     </li>
   );
 }
