@@ -74,21 +74,18 @@ export default function Application(props) {
 	});
 
 	const setDay = day => setState(prev => ({ ...prev, day }));
-	// const setDays = (days => setState(prev => ({...prev, days})));
 
 	useEffect(() => {
-		const days = Axios.get("http://localhost:8001/api/days");
-		// .then(res => {console.log(res.data)});
-		const appointments = Axios.get("http://localhost:8001/api/appointments");
-		// .then(res => {console.log(res.data)});
+		const daysP = Axios.get("http://localhost:8001/api/days");
+		const appointmentsP = Axios.get("http://localhost:8001/api/appointments");
 
-		Promise.all([days, appointments])
-			.then(all => {
-				console.log(days, appointments);
-				setState(prev => ({
-					days: days,
-					appointments: appointments
-				}));
+		Promise.all([daysP, appointmentsP])
+			.then((results_array) => {
+				const [days, appointments] = results_array;
+				setState({
+					days: days.data,
+					appointments: appointments.data
+				});
 			})
 			.catch(err => {
 				console.error(err);
