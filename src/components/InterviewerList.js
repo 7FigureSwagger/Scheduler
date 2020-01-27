@@ -10,18 +10,18 @@ export default function InterviewerList(props) {
 		"interviewers__item--selected": props.selected
 	});
 
-	const InterviewerList = props.interviewers.map(interviewer => {
-		return (
-			<InterviewerListItem
-				className={interviewerClass}
-				key={interviewer.id}
-				name={interviewer.name}
-				avatar={interviewer.avatar}
-				selected={interviewer.id === props.value}
-				setInterviewer={() => props.onChange(interviewer.id)}
-			/>
-		);
-	});
+	// const InterviewerList = props.interviewers.map(interviewer => {
+	// 	return (
+	// 		<InterviewerListItem
+	// 			className={interviewerClass}
+	// 			key={interviewer.id}
+	// 			name={interviewer.name}
+	// 			avatar={interviewer.avatar}
+	// 			selected={interviewer.id === props.value}
+	// 			setInterviewer={() => props.onChange(interviewer.id)}
+	// 		/>
+	// 	);
+	// });
 
 	return (
 		<section className="interviewers">

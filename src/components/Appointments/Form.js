@@ -9,7 +9,7 @@ export default function Form(props) {
 
   function reset() {
     setName("");
-    props.setInterviewer(null);
+    // props.setInterviewer(null);
   }
 
   function cancel() {

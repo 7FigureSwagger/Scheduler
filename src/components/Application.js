@@ -4,8 +4,8 @@ import InterviewerList from "components/InterviewerList";
 import "components/Application.scss";
 import Appointment from "./Appointments";
 import Axios from "axios";
-import {getAppointmentsForDay, getInterview} from '../helpers/selectors'
-
+import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
+import useVisualMode from "hooks/useVisualMode";
 
 const appointments = [
 	{
@@ -57,11 +57,12 @@ export default function Application(props) {
 		appointments: {},
 		interviewers: []
 	});
-	
+	const EMPTY = "EMPTY";
+	const SHOW = "SHOW";
+
 	const setDay = day => setState(prev => ({ ...prev, day }));
 	const appointments = getAppointmentsForDay(state, state.day);
-	
-	
+
 	// console.log('state', state, 'state day', state.day);
 
 	useEffect(() => {
@@ -72,7 +73,7 @@ export default function Application(props) {
 		// console.log(interviewersP.data);
 
 		Promise.all([daysP, appointmentsP, interviewersP])
-			.then((results_array) => {
+			.then(results_array => {
 				const [days, appointments, interviewers] = results_array;
 				// console.log('interviewers', interviewers.data);
 				setState({
@@ -85,14 +86,16 @@ export default function Application(props) {
 				console.error(err);
 			});
 	}, []);
+	
 
-	const schedule = appointments.map((appointment) => {
 
-	const interview = getInterview(state, appointment.interview);
-		console.log('current interview', interview);
+	const schedule = appointments.map(appointment => {
+		const interview = getInterview(state, appointment.interview);
+		
+		console.log("current interview", interview);
 		return (
 			<>
-				<Appointment key={appointment.id} {...appointment} />
+				<Appointment key={appointment.id} empty={appointment.EMPTY} show={appointment.SHOW} {...appointment} />
 			</>
 		);
 	});
