@@ -8,7 +8,7 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
-
+import bookInterview from '../Application';
 
 
 export default function Appointment(props) {
@@ -26,6 +26,20 @@ export default function Appointment(props) {
 		props.interview ? SHOW : EMPTY
 	);
 
+	function bookInterview(id, interview) {
+		// const [ state, setState ] = useState(null)
+		console.log(id, interview);
+	}
+	
+	function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+  }
+
+	console.log('props in index', props.interviewers)
+
 	return (
 		<article className="appointment">
 			<Header time={props.time} />
@@ -37,9 +51,9 @@ export default function Appointment(props) {
 				/>
 			)}
 			{mode === CREATE && (
-				<Form onCancel={back}  state={props.state} />
+				<Form onCancel={back}  state={props.state} onSave={save} interviewers={props.interviewers}/>
 			)}
-			{/* onSave={save} */}
+			
 			{/* {mode === EDIT && ()} */}
 			{mode === CONFIRM && (
 				 <Confirm

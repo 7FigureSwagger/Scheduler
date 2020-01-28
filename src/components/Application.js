@@ -4,7 +4,7 @@ import InterviewerList from "components/InterviewerList";
 import "components/Application.scss";
 import Appointment from "./Appointments";
 import Axios from "axios";
-import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 import useVisualMode from "hooks/useVisualMode";
 
 const appointments = [
@@ -50,52 +50,65 @@ const appointments = [
 	}
 ];
 
+
 export default function Application(props) {
+	
 	const [state, setState] = useState({
-		day: "Monday",
+		day: "",
 		days: [],
-		appointments: {},
+		appointments: {
+			"1": {
+				id: 1,
+				time: "12pm",
+				interview: null
+			}
+		},
 		interviewers: []
 	});
-	const EMPTY = "EMPTY";
-	const SHOW = "SHOW";
 
+	
 	const setDay = day => setState(prev => ({ ...prev, day }));
 	const appointments = getAppointmentsForDay(state, state.day);
-
-	// console.log('state', state, 'state day', state.day);
+	const interviewers = getInterviewersForDay(state, state.day);
 
 	useEffect(() => {
 		const daysP = Axios.get("http://localhost:8001/api/days");
 		const appointmentsP = Axios.get("http://localhost:8001/api/appointments");
 		const interviewersP = Axios.get("http://localhost:8001/api/interviewers");
 
-		// console.log(interviewersP.data);
-
 		Promise.all([daysP, appointmentsP, interviewersP])
 			.then(results_array => {
 				const [days, appointments, interviewers] = results_array;
-				// console.log('interviewers', interviewers.data);
 				setState({
 					days: days.data,
 					appointments: appointments.data,
 					interviewers: interviewers.data
 				});
+				
+				
+				console.log('after promise interviewers', interviewers.data)
+
 			})
 			.catch(err => {
 				console.error(err);
 			});
 	}, []);
-	
-
 
 	const schedule = appointments.map(appointment => {
 		const interview = getInterview(state, appointment.interview);
-		
-		console.log("current interview", interview);
 		return (
 			<>
-				<Appointment key={appointment.id} empty={appointment.EMPTY} show={appointment.SHOW} {...appointment} />
+				<Appointment
+					key={appointment.id}
+					empty={appointment.EMPTY}
+					show={appointment.SHOW}
+					// save={save}
+					interviewers={interviewers}
+					interview={getInterview(state, appointment.interview)}
+					// bookInterview={bookInterview}
+					// cancelInterview={cancelInterview}		
+					{...appointment}
+				/>
 			</>
 		);
 	});

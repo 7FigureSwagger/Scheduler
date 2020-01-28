@@ -9,23 +9,32 @@ export default function InterviewerList(props) {
 	const interviewerClass = classnames("interviewers__item", {
 		"interviewers__item--selected": props.selected
 	});
+	
+	// const num = Object.keys(props.interviewers);
 
-	// const InterviewerList = props.interviewers.map(interviewer => {
-	// 	return (
-	// 		<InterviewerListItem
-	// 			className={interviewerClass}
-	// 			key={interviewer.id}
-	// 			name={interviewer.name}
-	// 			avatar={interviewer.avatar}
-	// 			selected={interviewer.id === props.value}
-	// 			setInterviewer={() => props.onChange(interviewer.id)}
-	// 		/>
-	// 	);
-	// });
+	var result = Object.keys(props.interviewers).map(function(key) {
+		return [Number(key), props.interviewers[key]];
+	});
+	
+	// console.log('inside interviewerlist', result);
+	
+	const InterviewerList = result.map(interviewer => {
+		return (
+			<InterviewerListItem
+				className={interviewerClass}
+				key={interviewer[1].id}
+				name={interviewer[1].name}
+				avatar={interviewer[1].avatar}
+				selected={interviewer[1].id === props.value}
+				setInterviewer={() => props.onChange(interviewer[1].id)}
+			/>
+			
+		);
+	});
 
 	return (
 		<section className="interviewers">
-			<h4 className="interviewers__header text--light">Interviewer</h4>
+			<h4 className="interviewers__header text--light">Interviewers</h4>
 			<ul className="interviewers__list">{InterviewerList}</ul>
 		</section>
 	);

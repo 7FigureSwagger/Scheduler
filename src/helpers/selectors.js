@@ -18,7 +18,7 @@ export const getInterview = (state, interview) => {
  } else {
    
   const student = interview.student;
-  const interviewer = state.appointments.interviewers[interview.interviewer];
+  const interviewer = state.interviewers[interview.interviewer];
   const interviewObj = { student, interviewer };
   return interviewObj;
  }
@@ -27,13 +27,13 @@ export const getInterview = (state, interview) => {
 export const getInterviewersForDay = (state, day) => {
 	const appForDay = state.days
     .filter(spec => spec.name === day)
-    .map(spec => spec.appointments)
+    .map(spec => spec.interviewers)
     .reduce((acc, val) => acc.concat(val), []);
 
-  const appointment = [];
+  const interviewers = [];
   appForDay.forEach(spec => {
-    appointment.push(state.appointments[spec]);
+    interviewers.push(state.interviewers[spec]);
   });
 
-  return appointment;
+  return interviewers;
 };
