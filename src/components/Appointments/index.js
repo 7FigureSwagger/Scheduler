@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "components/Appointments/styles.scss";
 import Header from "./Header";
 import Show from "./Show";
@@ -7,8 +7,8 @@ import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
-import useVisualMode from "hooks/useVisualMode";
-import bookInterview from '../Application';
+import useVisualMode from "../../hooks/useVisualMode"
+// import bookInterview from '../';
 
 
 export default function Appointment(props) {
@@ -26,20 +26,28 @@ export default function Appointment(props) {
 		props.interview ? SHOW : EMPTY
 	);
 
-	function bookInterview(id, interview) {
-		// const [ state, setState ] = useState(null)
-		console.log(id, interview);
-	}
-	
+  // function reset() {
+  //   setName("");
+  //   // props.setInterviewer(null);
+  // }
+
+  function cancel() {
+    // reset();
+    props.onCancel();
+  }
+
 	function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
-    };
-  }
+		};
+		console.log('button clicked', interview);
+		props.bookInterview(props.id, interview)
 
-	console.log('props in index', props.interviewers)
+		return transition(SHOW);
 
+	}
+	
 	return (
 		<article className="appointment">
 			<Header time={props.time} />
@@ -51,14 +59,13 @@ export default function Appointment(props) {
 				/>
 			)}
 			{mode === CREATE && (
-				<Form onCancel={back}  state={props.state} onSave={save} interviewers={props.interviewers}/>
+				<Form onCancel={cancel}  state={props.state} onSave={save} interviewers={props.interviewers}/>
 			)}
 			
 			{/* {mode === EDIT && ()} */}
 			{mode === CONFIRM && (
 				 <Confirm
 				 message="Delete this appointment?"
-				//  onConfirm={deleteAppointment}
 				 onCancel={() => back()}
 			 />
 			)}
@@ -86,3 +93,7 @@ export default function Appointment(props) {
 	);
 }
 // {props.interview ? (<Show student={props.interview.student} interviewer={props.interview.interviewer}/>) : (<Empty />)}
+{/* <Show
+			student={props.interview.student}
+			interviewer={props.interview.interviewer}
+		/>); */}

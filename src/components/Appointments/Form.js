@@ -2,30 +2,17 @@ import React, { useState } from "react";
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 import bookInterview from '../Application';
+// import save from "index";
 
-export default function Form(props) {
+export default function Form({
+	onSave,
+	onCancel,
+	...props
+}) 
+{
 	const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-
-  function reset() {
-    setName("");
-    // props.setInterviewer(null);
-  }
-
-  function cancel() {
-    reset();
-    props.onCancel();
-  }
-
-  function save() {
-    console.log('tried to save', name, interviewer);
-    // setName(name);
-    // setInterviewer(interviewer);
-    props.onSave(name, interviewer);
-	}
-	
-	console.log('props', props)
-	// console.log('props', interviewer)
+	// console.log('looking for save data', props);
 
 	return (
 		<main className="appointment__card appointment__card--create">
@@ -49,10 +36,10 @@ export default function Form(props) {
 			</section>
 			<section className="appointment__card-right">
 				<section className="appointment__actions">
-					<Button danger onClick={cancel}>
+					<Button danger onClick={onCancel}>
 						Cancel
 					</Button>
-					<Button confirm onClick={save}>
+					<Button confirm onClick={() => onSave(name, interviewer)}>
 						Save
 					</Button>
 				</section>

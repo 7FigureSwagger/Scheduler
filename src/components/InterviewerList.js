@@ -10,13 +10,9 @@ export default function InterviewerList(props) {
 		"interviewers__item--selected": props.selected
 	});
 	
-	// const num = Object.keys(props.interviewers);
-
 	var result = Object.keys(props.interviewers).map(function(key) {
 		return [Number(key), props.interviewers[key]];
 	});
-	
-	// console.log('inside interviewerlist', result);
 	
 	const InterviewerList = result.map(interviewer => {
 		return (
