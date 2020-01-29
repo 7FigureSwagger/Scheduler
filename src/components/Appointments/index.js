@@ -20,8 +20,8 @@ export default function Appointment(props) {
 	const CONFIRM = "CONFIRM";
 	const SAVING = "SAVING";
 	const DELETING = "DELETING";
-	const ERROR_SAVE = "ERROR-SAVE";
-	const ERROR_DELETE = "ERROR-DELETE";
+	const ERROR_SAVE = "ERROR_SAVE";
+	const ERROR_DELETE = "ERROR_DELETE";
 
 	const { mode, transition, back } = useVisualMode(
 		props.interview ? SHOW : EMPTY
@@ -51,13 +51,11 @@ export default function Appointment(props) {
 			interviewer
 		}
 		console.log('trying to cancel', props.id)
-		transition(DELETING)
+		transition(DELETING, true)
 		
 		props.cancelInterview(props.id)
 		.then(() => transition(EMPTY))
-		.catch(err => {
-			console.log('gg');
-		})
+		.catch(err => transition(ERROR_DELETE, true))
   }
 
 	function save(name, interviewer) {
@@ -69,7 +67,8 @@ export default function Appointment(props) {
 		transition(SAVING);
 
 		props.bookInterview(props.id, interview)
-			.then(() => transition(SHOW));
+			.then(() => transition(SHOW))
+			.catch(err => transition(ERROR_SAVE, true))
 	}
 
 	return (
@@ -77,6 +76,7 @@ export default function Appointment(props) {
 			<Header time={props.time} />
 			{mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 			{mode === SHOW && (
+				console.log('props in appointment', props), 
 				<Show
 					student={props.interview.student}
 					interviewer={props.interview.interviewer}
@@ -118,10 +118,11 @@ export default function Appointment(props) {
 				onClose={() => back()}
 			/>
 			)}
-			{mode === ERROR_DELETE && (<Error 
+			{mode === ERROR_DELETE && (
+				<Error 
             message="Something broke while deleting, try again"
             onClose={() => back()}
-          />)}
+      />)}
 		</article>
 	);
 }

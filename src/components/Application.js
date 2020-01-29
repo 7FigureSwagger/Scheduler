@@ -80,33 +80,24 @@ export default function Application(props) {
 		};
 		return Axios.put(`/api/appointments/${id}`, {
 			interview
+		}).then(function(response) {
+			setState({
+				...state,
+				appointments
+			});
+			console.log("trying to return");
+		});
+	}
+
+	function cancelInterview(id, interview) {
+		return Axios.delete(`/api/appointments/${id}`, {
+			interview: null
 		})
 			.then(function(response) {
 				setState({
-					...state,
-					appointments
+					...state
 				});
-				console.log("trying to return");
 			})
-			.catch(function(error) {
-				console.error(error);
-			});
-	}
-
-	function cancelInterview(id, interview){
-		return( 
-		Axios.delete(`/api/appointments/${id}`, {
-			interview: null
-		})
-		.then(function(response) {
-			setState({
-				...state
-			});
-		})
-		.catch(function(error) {
-			console.error(error);
-		})
-		)
 	}
 
 	const setDay = day => setState(prev => ({ ...prev, day }));
