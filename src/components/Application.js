@@ -4,7 +4,11 @@ import InterviewerList from "components/InterviewerList";
 import "components/Application.scss";
 import Appointment from "./Appointments";
 import Axios from "axios";
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
+import {
+	getAppointmentsForDay,
+	getInterview,
+	getInterviewersForDay
+} from "../helpers/selectors";
 import useVisualMode from "hooks/useVisualMode";
 
 const appointments = [
@@ -50,9 +54,7 @@ const appointments = [
 	}
 ];
 
-
 export default function Application(props) {
-	
 	const [state, setState] = useState({
 		day: "",
 		days: [],
@@ -66,7 +68,7 @@ export default function Application(props) {
 		interviewers: []
 	});
 
-	function bookInterview(id, interview) {
+	function bookInterview(id, interview, callback) {
 		const appointment = {
 			...state.appointments[id],
 			interview: { ...interview }
@@ -76,15 +78,36 @@ export default function Application(props) {
 			...state.appointments,
 			[id]: appointment
 		};
-
-		setState({
-			...state,
-			appointments
+		return Axios.put(`/api/appointments/${id}`, {
+			interview
 		})
-
-		console.log(id, interview);
+			.then(function(response) {
+				setState({
+					...state,
+					appointments
+				});
+				console.log("trying to return");
+			})
+			.catch(function(error) {
+				console.error(error);
+			});
 	}
 
+	function cancelInterview(id, interview){
+		return( 
+		Axios.delete(`/api/appointments/${id}`, {
+			interview: null
+		})
+		.then(function(response) {
+			setState({
+				...state
+			});
+		})
+		.catch(function(error) {
+			console.error(error);
+		})
+		)
+	}
 
 	const setDay = day => setState(prev => ({ ...prev, day }));
 	const appointments = getAppointmentsForDay(state, state.day);
@@ -103,10 +126,6 @@ export default function Application(props) {
 					appointments: appointments.data,
 					interviewers: interviewers.data
 				});
-				
-				
-				console.log('after promise interviewers', interviewers.data)
-
 			})
 			.catch(err => {
 				console.error(err);
@@ -114,18 +133,19 @@ export default function Application(props) {
 	}, []);
 
 	const schedule = appointments.map(appointment => {
-		const interview = getInterview(state, appointment.interview);
+		// const interview = getInterview(state, appointment.interview);
 		return (
 			<>
 				<Appointment
 					id={appointment.id}
 					key={appointment.id}
 					empty={appointment.EMPTY}
+					status={appointment.SAVING}
 					show={appointment.SHOW}
 					interviewers={interviewers}
 					interview={getInterview(state, appointment.interview)}
 					bookInterview={bookInterview}
-					// cancelInterview={cancelInterview}		
+					cancelInterview={cancelInterview}
 					{...appointment}
 				/>
 			</>

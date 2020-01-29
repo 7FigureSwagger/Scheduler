@@ -25,7 +25,6 @@ export default function Form({
             value={name}
             placeholder="Enter Student Name"
             onChange={event => setName(event.target.value)}
-					
 					/>
 				</form>
 				<InterviewerList
