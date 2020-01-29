@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import DayList from "components/DayList";
-import InterviewerList from "components/InterviewerList";
 import "components/Application.scss";
 import Appointment from "./Appointments";
-import Axios from "axios";
 import {
 	getAppointmentsForDay,
 	getInterview,
 	getInterviewersForDay
 } from "../helpers/selectors";
 import useApplicationData from '../hooks/useApplicationData'
-import useVisualMode from "hooks/useVisualMode";
 
 
 export default function Application(props) {
@@ -22,7 +19,7 @@ export default function Application(props) {
     cancelInterview
 	} = useApplicationData();
 	
-	console.log(state);
+	console.log('state', useApplicationData());
 
 	const interviewers = getInterviewersForDay(state, state.day);
 

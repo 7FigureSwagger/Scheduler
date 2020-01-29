@@ -8,8 +8,6 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "../../hooks/useVisualMode"
-import cancelInterview from "../Application"
-// import bookInterview from '../';
 
 
 export default function Appointment(props) {
@@ -76,7 +74,6 @@ export default function Appointment(props) {
 			<Header time={props.time} />
 			{mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
 			{mode === SHOW && (
-				console.log('props in appointment', props), 
 				<Show
 					student={props.interview.student}
 					interviewer={props.interview.interviewer}
