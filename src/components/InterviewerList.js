@@ -14,6 +14,7 @@ export default function InterviewerList(props) {
 		return [Number(key), props.interviewers[key]];
 	});
 	
+	// console.log('results inside InterviewerList', result)
 	const InterviewerList = result.map(interviewer => {
 		return (
 			<InterviewerListItem

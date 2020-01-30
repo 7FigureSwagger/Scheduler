@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import classnames from 'classnames/bind';
-
+import SET_DAY from '../hooks/useApplicationData';
 import 'components/DayListItem.scss';
 
 export default function DayListItem(props) {
-  
+  console.log('inside DayListItem', props)
   const dayClass = classnames('day-list__item', {
     'day-list__item--selected':props.selected,
     'day-list__item--full':props.spots === 0,
@@ -26,7 +26,7 @@ export default function DayListItem(props) {
        return ("5 spots remaining");
     }
    }
-  //  console.log(props);
+   console.log('props', props);
   return (
     <li className={dayClass} onClick={() => props.setDay(props.name)}>
       <h2 >{props.name}</h2>
