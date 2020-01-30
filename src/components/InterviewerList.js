@@ -14,8 +14,10 @@ export default function InterviewerList(props) {
 		return [Number(key), props.interviewers[key]];
 	});
 	
-	// console.log('results inside InterviewerList', result)
+	// console.log('props inside InterviewerList', props.interviewer)
 	const InterviewerList = result.map(interviewer => {
+		// if(interviewer.id === )
+		
 		return (
 			<InterviewerListItem
 				className={interviewerClass}

@@ -29,10 +29,9 @@ function reducer(state, action) {
 		}
 
 		default:
-			// throw new Error(
-			// 	`Tried to reduce with unsupported action type: ${action.type}`
-			// );
-			// console.log('sup');
+			throw new Error(
+				`Tried to reduce with unsupported action type: ${action.type}`
+			);
 	}
 }
 
@@ -104,6 +103,10 @@ export default function useApplicationData() {
 			});
 		});
 	}
+
+	// function spotsLeft(appointments, day, days){
+	// 	const spots
+	// }
 	console.log('state before return', state);
 	return { state, setDay, bookInterview, cancelInterview };
 }

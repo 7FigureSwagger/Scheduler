@@ -6,16 +6,17 @@ import InterviewerListItem from "components/InterviewerListItem";
 
 export default function Show(props) {
 	const [interviewer, setInterviewer] = useState(props.interviewer || null);
-	// console.log('show props', props);
+	console.log('show props SHOW mode', props);
 	return (
 		<main className="appointment__card appointment__card--show">
 			<section className="appointment__card-left">
 				<h2 className="text--regular">{props.student}</h2>
 				<section className="interviewer">
 					{/* <h4 className="text--light">Interviewer</h4> */}
-					<h3 className="text--regular">
+					<h3 className="text--regular">{interviewer && interviewer.name}
 					<InterviewerList
 					interviewers={props.interviewers}
+					interview={props.interview}
 					value={interviewer}
           onChange={id => setInterviewer(id)}
 				/>

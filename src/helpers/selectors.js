@@ -24,16 +24,18 @@ export const getInterview = (state, interview) => {
 };
 
 export const getInterviewersForDay = (state, day) => {
-  // console.log('state in func', state);
+  // console.log('state in GIFD func', state.days);
 	const appForDay = state.days
     .filter(spec => spec.name === day)
     .map(spec => spec.interviewers)
     .reduce((acc, val) => acc.concat(val), []);
 
+  // console.log('a for d', appForDay)
   const interviewers = [];
   appForDay.forEach(spec => {
     interviewers.push(state.interviewers[spec]);
   });
 
+  // console.log('interviewers', interviewers);
   return interviewers;
 };

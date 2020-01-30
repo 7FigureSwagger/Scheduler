@@ -12,7 +12,7 @@ export default function Form({
 {
 	const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-	// console.log('looking for save data', props);
+	// console.log('looking for save data Form.js', props);
 
 	return (
 		<main className="appointment__card appointment__card--create">
@@ -24,7 +24,7 @@ export default function Form({
             type="text"
             value={name}
             placeholder="Enter Student Name"
-            onChange={event => setName(event.target.value)}
+            onChange={(event) => setName(event.target.value)}
 					/>
 				</form>
 				<InterviewerList
