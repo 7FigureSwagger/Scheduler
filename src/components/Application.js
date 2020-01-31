@@ -11,17 +11,20 @@ import useApplicationData from '../hooks/useApplicationData'
 
 
 export default function Application(props) {
-	
 	const {
 		state,
     setDay,
     bookInterview,
-    cancelInterview
+		cancelInterview,
+		spotsLeft
 	} = useApplicationData();
+	// console.log('genesis', state);
 	
-	console.log('DayState', state.day);
 	const interviewers = getInterviewersForDay(state, state.day);
+	// const [interviewersC, setInterviewersC] = useState();
 
+	console.log('App.js', interviewers);
+	// console.log('interviewers', interviewers)
 	const appointments = getAppointmentsForDay(state, state.day).map(
 		appointment => {
 			return (
@@ -31,11 +34,10 @@ export default function Application(props) {
 					empty={appointment.EMPTY}
 					status={appointment.SAVING}
 					show={appointment.SHOW}
-					interviewers={state.interviewers}
+					interviewers={interviewers}
 					interview={getInterview(state, appointment.interview)}
 					bookInterview={bookInterview}
 					cancelInterview={cancelInterview}
-					{...appointment}
 					/>
 			)
 		}
@@ -51,7 +53,7 @@ export default function Application(props) {
 				/>
 				<hr className="sidebar__separator sidebar--centered" />
 				<nav className="sidebar__menu">
-					<DayList days={state.days} day={state.day} setDay={setDay} />
+					<DayList days={state.days} day={state.day} setDay={setDay} appointments={state.appointments} spotsLeft={spotsLeft} />
 				</nav>
 				<img
 					className="sidebar__lhl sidebar--centered"

@@ -8,6 +8,7 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "../../hooks/useVisualMode"
+import { getInterviewersForDay } from "helpers/selectors";
 
 
 export default function Appointment(props) {
@@ -20,10 +21,11 @@ export default function Appointment(props) {
 	const DELETING = "DELETING";
 	const ERROR_SAVE = "ERROR_SAVE";
 	const ERROR_DELETE = "ERROR_DELETE";
-
+	console.log("the interview ", props)
 	const { mode, transition, back } = useVisualMode(
 		props.interview ? SHOW : EMPTY
 	);
+
 
   // function reset() {
   //   setName("");
@@ -32,12 +34,11 @@ export default function Appointment(props) {
 	// transition(CONFIRM)
 
 	function edit(){
-		console.log('state', props);
 		transition(EDIT)
 	}
 
 	function confirm(){
-		console.log('in confirm mode')
+		// console.log('in confirm cancel mode', props)
 		return(
 			transition(CONFIRM)
 		)
@@ -48,9 +49,9 @@ export default function Appointment(props) {
 			student: name, 
 			interviewer
 		}
-		console.log('trying to cancel', props.id)
 		transition(DELETING, true)
-		
+		console.log('props in cancel', props)
+
 		props.cancelInterview(props.id)
 		.then(() => transition(EMPTY))
 		.catch(err => transition(ERROR_DELETE, true))
@@ -61,14 +62,16 @@ export default function Appointment(props) {
       student: name,
       interviewer
 		};
-		
+		console.log('props', props)
 		transition(SAVING);
 
 		props.bookInterview(props.id, interview)
-			.then(() => transition(SHOW))
+			.then(() => {
+				console.log('props2', props)
+				transition(SHOW)
+			})
 			.catch(err => transition(ERROR_SAVE, true))
 	}
-
 	return (
 		<article className="appointment">
 			<Header time={props.time} />
@@ -80,7 +83,6 @@ export default function Appointment(props) {
 					interviewers={props.interviewers}
 					onDelete={confirm}
 					onEdit={edit}
-					// onConfirm={confirm}
 					state={props.state}
 				/>
 			)}
