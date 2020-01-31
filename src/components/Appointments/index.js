@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "components/Appointments/styles.scss";
 import Header from "./Header";
 import Show from "./Show";
@@ -20,7 +20,6 @@ export default function Appointment(props) {
 	const DELETING = "DELETING";
 	const ERROR_SAVE = "ERROR_SAVE";
 	const ERROR_DELETE = "ERROR_DELETE";
-	console.log("the interview ", props)
 	const { mode, transition, back } = useVisualMode(
 		props.interview ? SHOW : EMPTY
 	);
@@ -36,10 +35,10 @@ export default function Appointment(props) {
 	}
 
   function cancel(name, interviewer) {
-		const interview = {
-			student: name, 
-			interviewer
-		}
+		// const interview = {
+		// 	student: name, 
+		// 	interviewer
+		// }
 		transition(DELETING, true)
 
 		props.cancelInterview(props.id)

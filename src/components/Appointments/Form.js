@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
-import bookInterview from '../Application';
-// import save from "index";
 
 export default function Form({
 	onSave,
@@ -12,7 +10,6 @@ export default function Form({
 {
 	const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-	// console.log('looking for save data Form.js', props);
 
 	return (
 		<main className="appointment__card appointment__card--create">

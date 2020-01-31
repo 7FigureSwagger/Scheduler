@@ -1,6 +1,4 @@
 import React from "react";
-import bookInterview from '../Application';
-
 
 export default function Error(props) {
 	return (

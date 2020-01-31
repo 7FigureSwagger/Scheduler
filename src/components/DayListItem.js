@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import classnames from 'classnames/bind';
-import SET_DAY from '../hooks/useApplicationData';
 import 'components/DayListItem.scss';
 
 export default function DayListItem(props) {
