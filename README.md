@@ -21,3 +21,7 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Visual Examples
+
+!["Main page all views"](/docs/MainPageAllViews.mov)
