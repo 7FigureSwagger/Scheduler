@@ -24,5 +24,5 @@ npm run storybook
 
 ## Visual Examples
 
-!["Main page add app"](/docs/MainPageAllViews.mov)
+!["Main page add app"](/docs/MainPageAddApp.png)
 !["Main page all views"](/docs/MainPageAllViews.mov)
