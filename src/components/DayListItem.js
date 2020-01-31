@@ -4,7 +4,6 @@ import SET_DAY from '../hooks/useApplicationData';
 import 'components/DayListItem.scss';
 
 export default function DayListItem(props) {
-  // console.log('inside DayListItem', )
   const dayClass = classnames('day-list__item', {
     'day-list__item--selected':props.selected,
     'day-list__item--full':props.spots === 0,

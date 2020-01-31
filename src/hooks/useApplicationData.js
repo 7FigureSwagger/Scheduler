@@ -11,7 +11,6 @@ function reducer(state, action) {
 
 	switch (type) {
 		case SET_DAY:
-			console.log("SET_DAY", action)
 			return { ...state, day };
 
 		case SET_APPLICATION_DATA:
@@ -31,7 +30,25 @@ function reducer(state, action) {
 			return { ...state, appointments };
 		}
 		case DELETE_INTERVIEW: {
-			return { ...state, days };
+			const appointment = {
+				...state.appointments[id],
+					interview
+			};
+			const appointments = {
+				...state.appointments,
+				[id]: appointment,
+				days: action.days
+			};
+
+			const updatedDays = state.days.map(day => {
+				if(day.name === state.day){
+					day.spots++;
+				}
+				return day
+			})
+	
+			console.log(appointments)
+			return { ...state, appointments, days: updatedDays };
 		}
 
 		default:
@@ -48,7 +65,6 @@ export default function useApplicationData() {
 		appointments: {},
 		interviewers: {}
 	});
-	// console.log('state in useAppData', state);
 	const setDay = day => dispatch({ type: SET_DAY, day });
 
 
@@ -61,8 +77,7 @@ export default function useApplicationData() {
 		Promise.all([daysP, appointmentsP, interviewersP])
 			.then(results_array => {
 				const [days, appointments, interviewers] = results_array;
-				// console.log('results', results_array);
-				// console.log('days', days);
+				
 				dispatch({
 					type: SET_APPLICATION_DATA,
 					days: days.data,
@@ -97,15 +112,12 @@ export default function useApplicationData() {
 			interview: null
 		}).then(function(response) {
 			console.log('what do we know ,', state.day, state.days)
-			const updatedDays = [
-				...state.days,
-				// [dayID]: {..state.days[dayID], spots: state.days.spots + 1}
-			];
+			
+			
 			dispatch({
 				type: DELETE_INTERVIEW,
 				id,
-				interview,
-				days: updatedDays
+				interview: null,
 			});
 		});
 	}
@@ -126,16 +138,3 @@ export default function useApplicationData() {
 
 	return { state, setDay, bookInterview, cancelInterview, spotsLeft };
 }
-
-// const filledSpots = Object.values({ ...appointments }).reduce(
-// 	(total, appointment) => {
-// 		if (appointmentList.includes(appointment.id)) {
-// 			if (appointment.interview) {
-// 				return total + 1;
-// 			}
-// 		}
-// 		return total;
-// 	},
-// 	0
-// 	);
-// return availableSpots - filledSpots;

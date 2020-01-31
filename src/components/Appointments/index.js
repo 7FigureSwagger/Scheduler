@@ -8,7 +8,6 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 import useVisualMode from "../../hooks/useVisualMode"
-import { getInterviewersForDay } from "helpers/selectors";
 
 
 export default function Appointment(props) {
@@ -26,19 +25,11 @@ export default function Appointment(props) {
 		props.interview ? SHOW : EMPTY
 	);
 
-
-  // function reset() {
-  //   setName("");
-  //   // props.setInterviewer(null);
-  // }
-	// transition(CONFIRM)
-
 	function edit(){
 		transition(EDIT)
 	}
 
 	function confirm(){
-		// console.log('in confirm cancel mode', props)
 		return(
 			transition(CONFIRM)
 		)
@@ -50,7 +41,6 @@ export default function Appointment(props) {
 			interviewer
 		}
 		transition(DELETING, true)
-		console.log('props in cancel', props)
 
 		props.cancelInterview(props.id)
 		.then(() => transition(EMPTY))
@@ -62,12 +52,10 @@ export default function Appointment(props) {
       student: name,
       interviewer
 		};
-		console.log('props', props)
 		transition(SAVING);
 
 		props.bookInterview(props.id, interview)
 			.then(() => {
-				console.log('props2', props)
 				transition(SHOW)
 			})
 			.catch(err => transition(ERROR_SAVE, true))

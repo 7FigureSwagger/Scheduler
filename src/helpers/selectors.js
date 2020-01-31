@@ -24,7 +24,6 @@ export const getInterview = (state, interview) => {
 };
 
 export const getInterviewersForDay = (state, day) => {
-  // console.log('state in GIFD func', state.days);
 
 	const appForDay = state.days
     .filter(spec => spec.name === day)

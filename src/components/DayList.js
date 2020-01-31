@@ -11,11 +11,6 @@ export default function DayList(props) {
     spotsLeft, 
     appointments 
   } = props
-	// const temp = props.days ? props.days : null;
-	// // console.log("Inside DayList", temp[0]);
-	// temp.map(day => {
-	// 	console.log('inside DayList', day.spots);
-	// })
 	
 	const dayList = props.days.map(day => {
 		return (
